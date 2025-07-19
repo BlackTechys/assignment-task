@@ -1,0 +1,48 @@
+.container {
+  width: 300px;
+  padding: 12px 16px;
+}
+
+.passengerSection {
+  margin-bottom: 16px;
+}
+
+.title {
+  margin-bottom: 12px;
+}
+
+.passengerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.passengerLabel {
+  font-weight: 500;
+}
+
+.passengerSubtext {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.counterControls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.counterValue {
+  min-width: 20px;
+  text-align: center;
+}
+
+.divider {
+  margin: 12px 0;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+}

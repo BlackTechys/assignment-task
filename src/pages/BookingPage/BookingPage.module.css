@@ -1,0 +1,31 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.promo {
+  padding: 40px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 500px;
+}
+
+.promoContent {
+  max-width: 600px;
+}
+
+.promoTitle {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #1e293b;
+  margin-bottom: 16px;
+}
+
+.promoSubtitle {
+  font-size: 18px;
+  color: #64748b;
+  font-weight: 500;
+}

@@ -1,0 +1,188 @@
+.container {
+  background: #f8fafc;
+  min-height: 100vh;
+  padding-top: 20px;
+}
+
+.searchContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  margin: 0 auto;
+  max-width: 1200px;
+  height: 64px;
+  margin-bottom: 24px;
+  font-size: 16px;
+}
+
+.searchInputContainer {
+  background: #f2f4f4;
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  flex: 2;
+  height: 64px;
+}
+
+.searchInput {
+  color: #1e293b;
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 45%;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.arrowContainer {
+  margin: 0 12px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.dateContainer {
+  background: #f2f4f4;
+  border-radius: 8px;
+  padding: 20px 16px;
+  flex: 1;
+  height: 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.dateLabel {
+  color: #64748b;
+  font-size: 14px;
+  line-height: 16px;
+  margin-bottom: 0;
+  margin-left: 10px;
+}
+
+.datePicker:focus,
+.datePicker:hover {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.datePicker input {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  color: #1f2937;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.returnContainer {
+  background: #f2f4f4;
+  border-radius: 8px;
+  padding: 8px 16px;
+  height: 64px;
+  width: 160px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.returnCardLink {
+  color: #5b6466;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+.passengerContainer {
+  background: #f2f4f4;
+  border-radius: 8px;
+  padding: 8px 16px;
+  flex: 1;
+  height: 64px;
+}
+
+.passengerSummary {
+  color: #1e293b;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.railcardLink {
+  color: black;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.searchIconContainer {
+  background: #f2f4f4;
+  border-radius: 8px;
+  width: 65px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.navigationContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.mainContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.errorContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.earlierButton {
+  border: 1px solid #d0d4d5;
+  border-radius: 6px;
+  padding: 19px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-weight: 500;
+  color: #1e293b;
+  font-size: 14px;
+  cursor: pointer;
+  background: white;
+  width: 100%;
+}
+
+.laterButton {
+  border: 1px solid #d0d4d5;
+  border-radius: 6px;
+  padding: 19px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-weight: 500;
+  color: #1e293b;
+  font-size: 14px;
+  cursor: pointer;
+  background: white;
+  width: 100%;
+}

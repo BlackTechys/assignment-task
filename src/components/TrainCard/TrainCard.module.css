@@ -1,0 +1,125 @@
+.card {
+  display: grid;
+  grid-template-columns: 1.5fr 0.5fr 1fr 1fr;
+  border-bottom: 1px solid #d0d4d5;
+  padding: 16px;
+  background: white;
+  align-items: start;
+  cursor: pointer;
+}
+
+.cardRecommended {
+  background: #f8fafc !important;
+}
+
+.timeContainer {
+  margin-bottom: 8px;
+}
+
+.timeText {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.durationText {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.heartIcon {
+  margin-top: 12px;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.logoContainer {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0 0 0;
+}
+
+.priceContainer {
+  text-align: right;
+  padding-right: 12px;
+}
+
+.priceInnerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.priceText {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.cheapestTag {
+  background: #facc15;
+  color: #111827;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.plusPriceContainer {
+  text-align: right;
+  padding-right: 16px;
+}
+
+.recommendationBanner {
+  grid-column: 1 / span 4;
+  background: #f0f9ff;
+  color: #0369a1;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-top: 12px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.priceContainer {
+  text-align: right;
+  padding-right: 0;
+}
+
+.priceGroup {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 12px;
+  min-width: 100px;
+}
+
+.cheapestPriceGroup {
+  background-color: #2d00b1;
+  border-radius: 4px;
+  padding: 8px 12px;
+}
+
+.priceText {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
+  width: 100%;
+}
+
+.cheapestTag {
+  background: #ffdc50;
+  color: #192325;
+  font-weight: 700;
+  font-size: 9px;
+  margin: 4px 0 0 0;
+  padding: 0 8px;
+  width: fit-content;
+  display: inline-block;
+  text-align: center;
+  border: none;
+}
+
+.cheapestPriceGroup .priceText {
+  color: white;
+}
