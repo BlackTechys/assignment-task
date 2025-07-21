@@ -21,6 +21,13 @@ interface ApiTrain {
   standard_price: number;
 }
 
+interface ApiResponse {
+  trains: ApiTrain[];
+  message: string;
+  count: number;
+  data: ApiTrain[];
+}
+
 export interface Train {
   id: string;
   departureTime: string;
@@ -53,7 +60,12 @@ const TicketPage: React.FC = () => {
 
   const fetchTrains = async (inputDate?: moment.Moment) => {
     const dateToUse = inputDate || date;
-    const formattedDate = moment(dateToUse).format("YYYY-MM-DD");
+    const nativeDate =
+      dateToUse instanceof Date ? dateToUse : dateToUse?.toDate();
+    const formattedDate = moment
+      .utc(nativeDate)
+      .utcOffset(330)
+      .format("YYYY-MM-DD");
 
     try {
       setLoading(true);
@@ -65,9 +77,11 @@ const TicketPage: React.FC = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const apiTrains: ApiTrain[] = await response.json();
+      const apiTrains: ApiResponse = await response.json();
 
-      const transformedTrains = apiTrains.slice(0, 6).map((apiTrain) => {
+      console.log("apitrains", apiTrains);
+
+      const transformedTrains = apiTrains.data.map((apiTrain) => {
         const departureMoment = moment(apiTrain.from_time);
         const arrivalMoment = moment(apiTrain.to_time);
         const durationMs = arrivalMoment.diff(departureMoment);

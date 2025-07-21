@@ -1,50 +1,54 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { QueryCommand, DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
+import { DynamoDBDocumentClient, QueryCommand } from "@aws-sdk/lib-dynamodb";
 
 const client = new DynamoDBClient({});
-const docClient = DynamoDBDocumentClient.from(client);
+const ddbDocClient = DynamoDBDocumentClient.from(client);
 
 export const handler = async (event) => {
-  const from = event.queryStringParameters?.from;
-  const to = event.queryStringParameters?.to;
-  const date = event.queryStringParameters?.date;
+  const { from, to, date } = event.queryStringParameters || {};
 
   if (!from || !to || !date) {
     return {
       statusCode: 400,
       body: JSON.stringify({
-        message: "Missing required query parameters: from, to, and date",
+        message: "Missing required parameters: from, to, date",
       }),
     };
   }
 
-  const route_date = `${from}#${to}#${date}`;
+  const route = `${from}#${to}`;
 
   try {
     const command = new QueryCommand({
-      TableName: "ticket_routes",
-      KeyConditionExpression: "route_date = :routeDate",
-      ExpressionAttributeValues: {
-        ":routeDate": route_date,
+      TableName: "ticket_routes_v2",
+      KeyConditionExpression: "#pk = :pkValue AND begins_with(#sk, :skPrefix)",
+      ExpressionAttributeNames: {
+        "#pk": "route",
+        "#sk": "route_date",
       },
-      ScanIndexForward: true
+      ExpressionAttributeValues: {
+        ":pkValue": route,
+        ":skPrefix": date,
+      },
+      ScanIndexForward: true,
     });
 
-    const response = await docClient.send(command);
+    const { Items } = await ddbDocClient.send(command);
 
     return {
       statusCode: 200,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(response.Items),
+      body: JSON.stringify({
+        message: "Tickets fetched successfully",
+        count: Items.length,
+        data: Items,
+      }),
     };
   } catch (error) {
-    console.error("Query error:", error);
+    console.error("Query failed:", error);
     return {
       statusCode: 500,
       body: JSON.stringify({
-        message: "Internal Server Error",
+        message: "Failed to fetch tickets",
         error: error.message,
       }),
     };

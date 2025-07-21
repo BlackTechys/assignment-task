@@ -8,14 +8,18 @@ const client = new DynamoDBClient({});
 const ddbDocClient = DynamoDBDocumentClient.from(client);
 
 function formatDate(date) {
-  return date.toLocaleDateString("en-CA");
+  return date.toLocaleDateString("en-CA"); 
 }
 
-function getISOTime(baseDate, hourOffset = 0, minuteOffset = 0) {
+function formatTime(date) {
+  return date.toTimeString().slice(0, 5); 
+}
+
+function getTimeObject(baseDate, hourOffset = 0, minuteOffset = 0) {
   const newDate = new Date(baseDate);
   newDate.setHours(newDate.getHours() + hourOffset);
   newDate.setMinutes(newDate.getMinutes() + minuteOffset);
-  return newDate.toISOString();
+  return newDate;
 }
 
 function generateTickets(from, to, startDate, dayCount, ticketsPerDay = 4) {
@@ -23,20 +27,29 @@ function generateTickets(from, to, startDate, dayCount, ticketsPerDay = 4) {
   for (let day = 0; day < dayCount; day++) {
     const baseDate = new Date(startDate);
     baseDate.setDate(baseDate.getDate() + day);
-    const date = formatDate(baseDate);
+    const datePart = formatDate(baseDate); 
+    const route = `${from}#${to}`;
 
     for (let slot = 0; slot < ticketsPerDay; slot++) {
-      const from_time = getISOTime(baseDate, 6 + slot * 2); 
-      const to_time = getISOTime(new Date(from_time), 2); 
+      const fromTimeObj = getTimeObject(baseDate, 6 + slot * 2);
+      const toTimeObj = getTimeObject(fromTimeObj, 2);
 
-      const standard_price = 150 + slot * 10 + day * 5; 
+      const from_time = fromTimeObj.toISOString();
+      const to_time = toTimeObj.toISOString();
+      const timePart = formatTime(fromTimeObj); 
+
+      const route_date = `${datePart}#${timePart}`; 
+
+      const standard_price = 150 + slot * 10 + day * 5;
       const plus_price = standard_price + 50;
 
       tickets.push({
-        route_date: `${from}#${to}#${date}`,
+        id: `${route}_${route_date}`,
+        route,          
+        route_date,      
         from,
         to,
-        date,
+        date: datePart,  
         from_time,
         to_time,
         standard_price,
@@ -47,13 +60,11 @@ function generateTickets(from, to, startDate, dayCount, ticketsPerDay = 4) {
   return tickets;
 }
 
-
 const defaultTickets = [
   ...generateTickets("Chennai", "Bangalore", new Date(), 5, 4),
   ...generateTickets("London", "Paris", new Date(), 5, 4),
   ...generateTickets("Paris", "London", new Date(), 5, 4),
 ];
-
 
 export const handler = async () => {
   const batchSize = 25;
@@ -62,10 +73,7 @@ export const handler = async () => {
   for (let i = 0; i < defaultTickets.length; i += batchSize) {
     const chunk = defaultTickets.slice(i, i + batchSize).map((item) => ({
       PutRequest: {
-        Item: {
-          id: `${item.route_date}_${item.from_time}`,
-          ...item,
-        },
+        Item: item,
       },
     }));
     chunks.push(chunk);
@@ -75,7 +83,7 @@ export const handler = async () => {
     for (const putRequests of chunks) {
       const command = new BatchWriteCommand({
         RequestItems: {
-          ticket_routes: putRequests,
+          ticket_routes_v2: putRequests,
         },
       });
       await ddbDocClient.send(command);
